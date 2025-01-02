@@ -6,6 +6,6 @@ interface TaskRepository{
     suspend fun fetchTasks(): List<TaskEntity>
     suspend fun fetchTaskById(id: Int): TaskEntity
     suspend fun createTask(task: TaskEntity)
-//    suspend fun updateTodo(todo: TodoEntity)
-//    suspend fun deleteTodo(id: Int)
+    suspend fun updateTask(id: Int, task: TaskEntity)
+    suspend fun deleteTask(id: Int)
 }

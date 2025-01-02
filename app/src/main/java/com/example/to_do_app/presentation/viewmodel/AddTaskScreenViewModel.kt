@@ -1,5 +1,6 @@
 package com.example.to_do_app.presentation.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -23,11 +24,14 @@ class AddTaskScreenViewModel @Inject constructor(
             try {
                 val task = TaskEntity(title = taskTitle, isCompleted = false, userId = 5, id= null)
                 taskRepository.createTask(task)
-                uiState.value = UiState.Success("Task added successfully")
+
+                Toast.makeText(navController.context, "Task added successfully", Toast.LENGTH_SHORT).show()
 
                 navigateToHome(navController)
             } catch (e: Exception) {
                 uiState.value = UiState.Error(e.message ?: "An error occured")
+
+                Toast.makeText(navController.context, e.message ?: "An error occurred", Toast.LENGTH_SHORT).show()
             }
         }
     }

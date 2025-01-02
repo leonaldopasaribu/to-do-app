@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface TaskRetrofitService {
@@ -13,15 +14,24 @@ interface TaskRetrofitService {
     suspend fun getTodos(): TaskResponseDto
 
     @GET("todos/{id}")
-    suspend fun getTodoById(@Path("id") id: Int): TaskDto
+    suspend fun getTodoById(
+        @Path("id") id: Int
+    ): TaskDto
 
     @POST("todos/add")
-    suspend fun addTodo(@Body task: TaskDto): TaskDto
+    suspend fun addTodo(
+        @Body task: TaskDto
+    ): TaskDto
 
-    @POST("todos/{id}")
-    suspend fun updateTodo(@Path("id") id: Int)
+    @PUT("todos/{id}")
+    suspend fun updateTodo(
+        @Path("id") id: Int,
+        @Body task: TaskDto
+    ): TaskDto
 
     @DELETE("todos/{id}")
-    suspend fun deleteTodo()
+    suspend fun deleteTodo(
+        @Path("id") id: Int,
+    )
 
 }

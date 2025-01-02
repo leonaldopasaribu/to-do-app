@@ -21,14 +21,13 @@ class TaskRepositoryImpl @Inject constructor(private val apiService: TaskRetrofi
         val taskDto = TaskMapper.toDto(task)
         apiService.addTodo(taskDto)
     }
-//
-//    override suspend fun updateTodo(todo: TodoEntity): TodoEntity {
-//        val todoDto = TodoMapper.toDto(todo)
-//        val updatedTodoDto = apiService.updateTodo(todoDto)
-//        return TodoMapper.toEntity(updatedTodoDto)
-//    }
-//
-//    override suspend fun deleteTodo(id: Int) {
-//        apiService.deleteTodo(id)
-//    }
+
+    override suspend fun updateTask(id: Int, task: TaskEntity) {
+        val taskDto = TaskMapper.toDto(task)
+        apiService.updateTodo(id, taskDto)
+    }
+
+    override suspend fun deleteTask(id: Int) {
+        apiService.deleteTodo(id)
+    }
 }

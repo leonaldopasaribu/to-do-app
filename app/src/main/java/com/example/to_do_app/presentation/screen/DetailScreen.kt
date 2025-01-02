@@ -37,7 +37,7 @@ fun DetailTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(taskId) {
-        viewModel.fetchTodo(taskId)
+        viewModel.fetchTask(taskId)
     }
 
     Scaffold(
@@ -61,7 +61,7 @@ fun DetailTaskScreen(
                 }
 
                 is UiState.Success<*> -> {
-                    val todo = (uiState as UiState.Success<TaskEntity>).data
+                    val task = (uiState as UiState.Success<TaskEntity>).data
 
                     Column(
                         modifier = Modifier
@@ -93,7 +93,7 @@ fun DetailTaskScreen(
                                     .fillMaxWidth()
                             ) {
                                 Text(
-                                    text = todo.title,
+                                    text = task.title,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Medium,
                                     color = Color.Black
@@ -145,7 +145,13 @@ fun DetailTaskScreen(
                         Spacer(modifier = Modifier.weight(1f))
 
                         Button(
-                            onClick = {},
+                            onClick = {
+                                viewModel.updateTaskStatus(
+                                    id = task.id ?: 0,
+                                    isCompleted = !task.isCompleted,
+                                    navController = navController
+                                )
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp),
@@ -153,14 +159,20 @@ fun DetailTaskScreen(
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Text(
-                                text = "Complete Task",
+                                text = if (task.isCompleted) "Cancel Task" else "Complete Task",
                                 color = Color.White,
                                 textAlign = TextAlign.Center
                             )
                         }
 
                         OutlinedButton(
-                            onClick = {},
+                            onClick = {
+                                task.id?.let {
+                                    viewModel.deleteTask(
+                                        it,
+                                        navController)
+                                }
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 12.dp)

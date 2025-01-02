@@ -27,19 +27,6 @@ fun AddTaskScreen(
 ) {
     var taskTitle by remember { mutableStateOf(TextFieldValue("")) }
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
-
-    LaunchedEffect(uiState) {
-        when (uiState) {
-            is UiState.Success<*> -> {
-                Toast.makeText(context, (uiState as UiState.Success<*>).data.toString(), Toast.LENGTH_SHORT).show()
-            }
-            is UiState.Error -> {
-                Toast.makeText(context, (uiState as UiState.Error).message, Toast.LENGTH_SHORT).show()
-            }
-            else -> Unit
-        }
-    }
 
     Scaffold(
         topBar = { TopAppBar(navController, "Add Task") }
